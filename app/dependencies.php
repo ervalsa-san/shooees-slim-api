@@ -26,5 +26,17 @@ return function (ContainerBuilder $containerBuilder) {
 
             return $logger;
         },
+
+        PDO::class => function(ContainerInterface $c) {
+            $settings = $c->get(SettingsInterface::class);
+                
+            $pdoSettings = $settings->get('db');
+            $pdo = new PDO('mysql:host=' . $pdoSettings['host'] . ';dbname=' . $pdoSettings['dbname'],
+                $pdoSettings['user'], 
+                $pdoSettings['password']);
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+            return $pdo;
+        }
     ]);
 };
