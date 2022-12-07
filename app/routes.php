@@ -50,12 +50,49 @@ return function (App $app) {
 
         return $response->withHeader("Content-Type", "application/json");
     });
+    
+    // Store Product
+    $app->post('/api/v1/product', function(Request $request, Response $response) {
+        $db = $this->get(PDO::class);
+        $parsedBody = $request->getParsedBody();
+        
+        $name = $parsedBody['name'];
+        $name = $parsedBody['price'];
+        $name = $parsedBody['description'];
+        $name = $parsedBody['stock'];
+        $name = $parsedBody[''];
+        $name = $parsedBody['name'];
+
+    });
+
+    // Store Payment
+    // $app->post('/payment', function(Request $request, Response $response) {
+    //     $db = $this->get(PDO::class);
+    //     $parsedBody = $request->getParsedBody();
+
+    //     $transaction_id = $parsedBody['transaction_id'];
+    //     $pay_date = $parsedBody['pay_date'];
+    //     $total_price = $parsedBody['total_price'];
+    //     $method = $parsedBody['method'];
+    //     $status = $parsedBody['status'];
+
+    //     $query = CALL InsertPayment()
+    //     $query->execute([$name, $username, $email, $password, $profile_photo_path, $alamat]);
+
+    //     $response->getBody()->write(json_encode(
+    //         [
+    //             "status" => "Registrasi berhasil"
+    //         ]
+    //     ));
+
+    //     return $response->withHeader("Content-Type", "application/json");
+    // });
 
     // All Product with Gallery
     $app->get('/api/v1/products', function(Request $request, Response $response) {
         $db = $this->get(PDO::class);
 
-        $query = $db->query('SELECT * FROM getallproductwithgallery');
+        $query = $db->query('SELECT * FROM getallproduct');
         
         $results = $query->fetchAll(PDO::FETCH_ASSOC);
 
@@ -68,6 +105,8 @@ return function (App $app) {
 
         return $response->withHeader("Content-Type", "application/json");
     });
+
+
 
     // Get one Product with ID
     $app->get('/api/v1/products/{id}', function(Request $request, Response $response, $args) {
@@ -93,16 +132,16 @@ return function (App $app) {
         $db = $this->get(PDO::class);
         $parsedBody = $request->getParsedBody();
 
+        $id = $parsedBody["id"];
         $name = $parsedBody["name"];
         $price = $parsedBody["price"];
         $description = $parsedBody["description"];
         $stock = $parsedBody["stock"];
         $category_id = $parsedBody["category_id"];
 
-        $query = $db->prepare('INSERT INTO product (name, price, description, stock, category_id) VALUES (?, ?, ?, ?, ?)');
-        $query->execute([$name, $price, $description, $stock, $category_id]);
+        $query = $db->prepare('CALL InsertProduct(?, ?, ?, ?, ?, ?)');
+        $query->execute([$id, $name, $price, $description, $stock, $category_id]);
 
-        
         $response->getBody()->write(json_encode(
             [
                 "message" => "Produk baru telah ditambahkan",
@@ -113,70 +152,114 @@ return function (App $app) {
         return $response->withHeader("Content-Type", "application/json");
     });
 
-    // // Login User
-    // $app->post('/login', function(Request $request, Response $response) {
-    //     $db = $this->get(PDO::class);
-    //     $parsedBody = $request->getParsedBody();
+    // Insert Product Category
+    $app->post('/api/v1/products/category', function(Request $request, Response $response) {
+        $db = $this->get(PDO::class);
+        $parsedBody = $request->getParsedBody();
 
-    //     $email = $parsedBody['email'];
-    //     $password = $parsedBody['password'];
-    //     $encryptPassword = password_hash($password, PASSWORD_DEFAULT);
-    //     $password = $encryptPassword;
+        $id = $parsedBody["id"];
+        $name = $parsedBody["name"];
 
-    //     $query = $db->prepare('SELECT email, password FROM user WHERE email = ? AND password = ?');
-    //     $query->execute([$email, $password]);
+        $query = $db->prepare('CALL InsertProductCategory(?, ?)');
+        $query->execute([$id, $name]);
 
-    //     $response->getBody()->write(json_encode(
-    //         [
-    //             "message" => "Berhasil login"
-    //         ]
-    //     ));
+        $response->getBody()->write(json_encode(
+            [
+                "message" => "Produk Kategori baru telah ditambahkan",
+                "data" => $request->getParsedBody()
+            ]
+        ));
 
-    //     return $response->withHeader("Content-Type", "application/json");
-    // });
+        return $response->withHeader("Content-Type", "application/json");
+    });
 
-    // // Get All Product
-    // $app->get('/products', function (Request $request, Response $response) {
-    //     $db = $this->get(PDO::class);
+    // Insert Product Gallery
+    $app->post('/api/v1/products/gallery', function(Request $request, Response $response) {
+        $db = $this->get(PDO::class);
+        $parsedBody = $request->getParsedBody();
 
-    //     $query = $db->query('SELECT id, name, price, description, category, product_photo, stock FROM product');
+        $id = $parsedBody["id"];
+        $product_id = $parsedBody["product_id"];
+        $name = $parsedBody["name"];
 
-    //     $results = $query->fetchAll(PDO::FETCH_ASSOC);
+        $query = $db->prepare('CALL InsertProductGallery(?, ?, ?)');
+        $query->execute([$id, $product_id, $name]);
 
-    //     $response->getBody()->write(json_encode(
-    //         [
-    //             "message" => "Berhasil memuat produk", 
-    //             "data" => $results
-    //         ])
-    //     );
+        $response->getBody()->write(json_encode(
+            [
+                "message" => "Produk Galeri baru telah ditambahkan",
+                "data" => $request->getParsedBody()
+            ]
+        ));
 
-    //     return $response->withHeader("Content-Type", "application/json");
-    // });
+        return $response->withHeader("Content-Type", "application/json");
+    });
 
-    // // Insert Product
-    // $app->post('/products', function (Request $request, Response $response) {
-    //     $db = $this->get(PDO::class);
-    //     $parsedBody = $request->getParsedBody();
-        
-    //     $name = $parsedBody['name'];
-    //     $price = $parsedBody['price'];
-    //     $description = $parsedBody['description'];
-    //     $category = $parsedBody['category'];
-    //     $product_photo = $parsedBody['product_photo'];
-    //     $stock = $parsedBody['stock'];
+    // Insert Product Size
+    $app->post('/api/v1/products/size', function(Request $request, Response $response) {
+        $db = $this->get(PDO::class);
+        $parsedBody = $request->getParsedBody();
 
-    //     $query = $db->prepare('INSERT INTO product (name, price, description, category, product_photo, stock) VALUES (?, ?, ?, ?, ?, ?)');
-    //     $query->execute([$name, $price, $description, $category, $product_photo, $stock]);
+        $id = $parsedBody["id"];
+        $product_id = $parsedBody["product_id"];
+        $name = $parsedBody["name"];
 
-    //     $lastId = $db->lastinsertId();
+        $query = $db->prepare('CALL InsertProductSize(?, ?, ?)');
+        $query->execute([$id, $product_id, $name]);
 
-    //     $response->getBody()->write(json_encode(
-    //         [
-    //             "status" => "Produk berhasil disimpan",
-    //             "message" => "Product disimpan dengan id " . $lastId
-    //         ]
-    //     ));
+        $response->getBody()->write(json_encode(
+            [
+                "message" => "Produk Size baru telah ditambahkan",
+                "data" => $request->getParsedBody()
+            ]
+        ));
 
-    //     return $response->withHeader("Content-Type", "application/json");
-    // });
+        return $response->withHeader("Content-Type", "application/json");
+    });
+
+    // Insert Transaction
+    $app->post('/api/v1/transactions', function(Request $request, Response $response) {
+        $db = $this->get(PDO::class);
+        $parsedBody = $request->getParsedBody();
+
+        $id = $parsedBody["id"];
+        $user_id = $parsedBody["user_id"];
+        $total_price = $parsedBody["total_price"];
+
+        $query = $db->prepare('CALL InsertTransaction(?, ?, ?)');
+        $query->execute([$id, $user_id, $total_price]);
+
+        $response->getBody()->write(json_encode(
+            [
+                "message" => "Transaksi baru telah ditambahkan",
+                "data" => $request->getParsedBody()
+            ]
+        ));
+
+        return $response->withHeader("Content-Type", "application/json");
+    });
+
+    // Insert Transaction item
+    $app->post('/api/v1/transactions/item', function(Request $request, Response $response) {
+        $db = $this->get(PDO::class);
+        $parsedBody = $request->getParsedBody();
+
+        $id = $parsedBody["id"];
+        $transaction_id = $parsedBody["transaction_id"];
+        $product_id = $parsedBody["product_id"];
+        $quantity = $parsedBody["quantity"];
+        $total_price = $parsedBody["total_price"];
+
+        $query = $db->prepare('CALL InsertTransactionItem(?, ?, ?, ?, ?)');
+        $query->execute([$id, $transaction_id, $product_id, $quantity, $total_price]);
+
+        $response->getBody()->write(json_encode(
+            [
+                "message" => "Transaksi Item baru telah ditambahkan",
+                "data" => $request->getParsedBody()
+            ]
+        ));
+
+        return $response->withHeader("Content-Type", "application/json");
+    });
 };
