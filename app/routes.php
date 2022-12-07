@@ -262,4 +262,138 @@ return function (App $app) {
 
         return $response->withHeader("Content-Type", "application/json");
     });
+
+    $app->delete('/api/v1/payments/{id}', function(Request $request, Response $response, $args) {
+        $currentId = $args['id'];
+
+        $db = $this->get(PDO::class);
+        $query = $db->prepare('CALL DeletePayment(?)');
+        $query->execute([$currentId]);
+
+        $response->getBody()->write(json_encode(['message' => "Payment delete with id " . $currentId]));
+
+        return $response->withHeader("Content-Type", "application/json");
+    });
+
+    $app->delete('/api/v1/products/{id}', function(Request $request, Response $response, $args) {
+        $currentId = $args['id'];
+
+        $db = $this->get(PDO::class);
+        $query = $db->prepare('CALL DeleteProduct(?)');
+        $query->execute([$currentId]);
+
+        $response->getBody()->write(json_encode(['message' => "Product delete with id " . $currentId]));
+
+        return $response->withHeader("Content-Type", "application/json");
+    });
+
+    $app->delete('/api/v1/products/caterogy/{id}', function(Request $request, Response $response, $args) {
+        $currentId = $args['id'];
+
+        $db = $this->get(PDO::class);
+        $query = $db->prepare('CALL DeleteCategory(?)');
+        $query->execute([$currentId]);
+
+        $response->getBody()->write(json_encode(['message' => "Product Category delete with id " . $currentId]));
+
+        return $response->withHeader("Content-Type", "application/json");
+    });
+
+    $app->delete('/api/v1/products/gallery/{id}', function(Request $request, Response $response, $args) {
+        $currentId = $args['id'];
+
+        $db = $this->get(PDO::class);
+        $query = $db->prepare('CALL DeleteProductGallery(?)');
+        $query->execute([$currentId]);
+
+        $response->getBody()->write(json_encode(['message' => "Product Gallery with id " . $currentId]));
+
+        return $response->withHeader("Content-Type", "application/json");
+    });
+
+    $app->delete('/api/v1/products/size/{id}', function(Request $request, Response $response, $args) {
+        $currentId = $args['id'];
+
+        $db = $this->get(PDO::class);
+        $query = $db->prepare('CALL DeleteProductSize(?)');
+        $query->execute([$currentId]);
+
+        $response->getBody()->write(json_encode(['message' => "Product size delete with id " . $currentId]));
+
+        return $response->withHeader("Content-Type", "application/json");
+    });
+
+    $app->delete('/api/v1/products/relation/{id}', function(Request $request, Response $response, $args) {
+        $currentId = $args['id'];
+
+        $db = $this->get(PDO::class);
+        $query = $db->prepare('CALL DeleteProductWithRelation(?)');
+        $query->execute([$currentId]);
+
+        $response->getBody()->write(json_encode(['message' => "Transaction delete with id " . $currentId]));
+
+        return $response->withHeader("Content-Type", "application/json");
+    });
+
+    $app->delete('/api/v1/transaction/{id}', function(Request $request, Response $response, $args) {
+        $currentId = $args['id'];
+
+        $db = $this->get(PDO::class);
+        $query = $db->prepare('CALL DeleteTransaction(?)');
+        $query->execute([$currentId]);
+
+        $response->getBody()->write(json_encode(['message' => "Transaction delete with id " . $currentId]));
+
+        return $response->withHeader("Content-Type", "application/json");
+    });
+
+    $app->delete('/api/v1/transaction/item/{id}', function(Request $request, Response $response, $args) {
+        $currentId = $args['id'];
+
+        $db = $this->get(PDO::class);
+        $query = $db->prepare('CALL DeleteTransactionItem(?)');
+        $query->execute([$currentId]);
+
+        $response->getBody()->write(json_encode(['message' => "Transaction Item delete with id " . $currentId]));
+
+        return $response->withHeader("Content-Type", "application/json");
+    });
+
+    $app->delete('/api/v1/transaction/relation/{id}', function(Request $request, Response $response, $args) {
+        $currentId = $args['id'];
+
+        $db = $this->get(PDO::class);
+        $query = $db->prepare('CALL DeleteTransactionWithRelation(?)');
+        $query->execute([$currentId]);
+
+        $response->getBody()->write(json_encode(['message' => "Transaction With Relation delete with id " . $currentId]));
+
+        return $response->withHeader("Content-Type", "application/json");
+    });
+
+    $app->delete('/api/v1/user/{id}', function(Request $request, Response $response, $args) {
+        $currentId = $args['id'];
+
+        $db = $this->get(PDO::class);
+        $query = $db->prepare('CALL DeleteUser(?)');
+        $query->execute([$currentId]);
+
+        $response->getBody()->write(json_encode(['message' => "Transaction delete with id " . $currentId]));
+
+        return $response->withHeader("Content-Type", "application/json");
+    });
+
+    $app->delete('/api/v1/user/role/{id}', function(Request $request, Response $response, $args) {
+        $currentId = $args['id'];
+        
+
+        $db = $this->get(PDO::class);
+        $query = $db->prepare('CALL DeleteUserRole(?)');
+        $query->execute([$currentId]);
+
+        $response->getBody()->write(json_encode(['message' => "Transaction delete with id " . $currentId]));
+
+        return $response->withHeader("Content-Type", "application/json");
+    });
+
 };

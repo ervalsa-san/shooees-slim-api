@@ -12,7 +12,7 @@ final class GeneratedConfig
 	public const EXTENSIONS = array (
   'jangregor/phpstan-prophecy' => 
   array (
-    'install_path' => 'C:\\laragon\\www\\shooees-slim-api\\vendor/jangregor/phpstan-prophecy',
+    'install_path' => 'C:\\xampp\\htdocs\\shooees-slim-api\\vendor/jangregor/phpstan-prophecy',
     'relative_install_path' => '../../../jangregor/phpstan-prophecy',
     'extra' => 
     array (

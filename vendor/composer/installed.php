@@ -3,7 +3,7 @@
         'name' => 'slim/slim-skeleton',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '155c11f63a9d3b3c904ef41044080f7292a73e63',
+        'reference' => '05ec8785ca3f1dd87110b549d2bcfb4c75b8c2fb',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -496,7 +496,7 @@
         'slim/slim-skeleton' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '155c11f63a9d3b3c904ef41044080f7292a73e63',
+            'reference' => '05ec8785ca3f1dd87110b549d2bcfb4c75b8c2fb',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
