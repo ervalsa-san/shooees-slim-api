@@ -29,8 +29,8 @@ return function (ContainerBuilder $containerBuilder) {
 
         PDO::class => function(ContainerInterface $c) {
             $settings = $c->get(SettingsInterface::class);
-                
             $pdoSettings = $settings->get('db');
+            
             $pdo = new PDO('mysql:host=' . $pdoSettings['host'] . ';dbname=' . $pdoSettings['dbname'],
                 $pdoSettings['user'], 
                 $pdoSettings['password']);

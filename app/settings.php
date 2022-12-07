@@ -22,7 +22,7 @@ return function (ContainerBuilder $containerBuilder) {
                     'level' => Logger::DEBUG,
                 ],
                 'db' => [
-                    'host' => 'localhost:8000',
+                    'host' => '127.0.0.1',
                     'dbname' => 'shooees',
                     'user' => 'root',
                     'password' => '',
